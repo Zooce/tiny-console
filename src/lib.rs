@@ -1,4 +1,4 @@
-use console::{Term, style};
+use console::Term;
 pub use console::{Color, Style};
 use std::io::Result;
 
@@ -18,7 +18,11 @@ impl TinyConsole {
     }
 
     pub fn cwrite(&self, s: &str, c: Color) -> Result<()> {
-        let styled = format!("{}", style(s).fg(c));
+        self.swrite(s, &Style::new().fg(c))
+    }
+
+    pub fn swrite(&self, s: &str, t: &Style) -> Result<()> {
+        let styled = format!("{}", t.apply_to(s));
         self.write(&styled)
     }
 
@@ -27,7 +31,11 @@ impl TinyConsole {
     }
 
     pub fn cwriteln(&self, s: &str, c: Color) -> Result<()> {
-        let styled = format!("{}", style(s).fg(c));
+        self.swriteln(s, &Style::new().fg(c))
+    }
+
+    pub fn swriteln(&self, s: &str, t: &Style) -> Result<()> {
+        let styled = format!("{}", t.apply_to(s));
         self.writeln(&styled)
     }
 
