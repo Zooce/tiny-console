@@ -3,7 +3,7 @@ use tiny_console::*;
 
 pub fn main() -> Result<()> {
     let style = Style::new().fg(Color::Cyan).on_magenta();
-    let tc = TinyConsole::new(Target::Stdout, false);
+    let tc = TinyConsole::new(Target::Stderr, false);
     tc.swrite("Hey, ", &style)?;
     tc.clearln()?;
     tc.write("Hello")?;

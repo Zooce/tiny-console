@@ -2,14 +2,22 @@ use console::Term;
 pub use console::{Color, Style};
 use std::io::Result;
 
+pub enum Target {
+    Stdout,
+    Stderr,
+}
+
 pub struct TinyConsole {
     terminal: Term,
 }
 
 impl TinyConsole {
-    pub fn stdout() -> Self {
+    pub fn new(target: Target, buffered: bool) -> Self {
         Self {
-            terminal: Term::stdout(),
+            terminal: match target {
+                Target::Stdout => if buffered { Term::buffered_stdout() } else { Term::stdout() },
+                Target::Stderr => if buffered { Term::buffered_stderr() } else { Term::stderr() },
+            },
         }
     }
 
@@ -41,5 +49,9 @@ impl TinyConsole {
 
     pub fn clearln(&self) -> Result<()> {
         self.terminal.clear_line()
+    }
+
+    pub fn flush(&self) -> Result<()> {
+        self.terminal.flush()
     }
 }

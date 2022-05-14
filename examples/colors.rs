@@ -3,7 +3,7 @@ use tiny_console::*;
 
 pub fn main() -> Result<()> {
     let g = Color::Green;
-    let tc = TinyConsole::stdout();
+    let tc = TinyConsole::new(Target::Stdout, false);
     tc.cwrite("Hey, ", g)?;
     tc.clearln()?;
     tc.write("Hello")?;
