@@ -2,9 +2,11 @@ use console::Term;
 pub use console::{Color, Style};
 use std::io::Result;
 
-pub enum Target {
+pub enum Mode {
     Stdout,
     Stderr,
+    BufferedStdout,
+    BufferedStderr,
 }
 
 pub struct TinyConsole {
@@ -12,12 +14,14 @@ pub struct TinyConsole {
 }
 
 impl TinyConsole {
-    pub fn new(target: Target, buffered: bool) -> Self {
+    pub fn new(mode: Mode) -> Self {
         Self {
-            terminal: match target {
-                Target::Stdout => if buffered { Term::buffered_stdout() } else { Term::stdout() },
-                Target::Stderr => if buffered { Term::buffered_stderr() } else { Term::stderr() },
-            },
+            terminal: match mode {
+                Mode::Stdout => Term::stdout(),
+                Mode::Stderr => Term::stderr(),
+                Mode::BufferedStdout => Term::buffered_stdout(),
+                Mode::BufferedStderr => Term::buffered_stderr(),
+            }
         }
     }
 

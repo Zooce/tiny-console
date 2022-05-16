@@ -2,12 +2,12 @@ use std::io::Result;
 use tiny_console::*;
 
 pub fn main() -> Result<()> {
-    let style = Style::new().fg(Color::Cyan).on_magenta();
-    let tc = TinyConsole::new(Target::Stdout, false);
-    tc.swrite("Hey, ", &style)?;
+    let s = Style::new().fg(Color::White).on_magenta();
+    let tc = TinyConsole::new(Mode::Stdout);
+    tc.swrite("Hey, ", &s)?;
     tc.clearln()?;
     tc.write("Hello")?;
-    tc.swrite(", ", &style)?;
+    tc.swrite(", ", &s)?;
     tc.swrite("World", &Style::new().fg(Color::Black).on_white())?;
-    tc.swriteln("!", &style)
+    tc.swriteln("!", &s)
 }
