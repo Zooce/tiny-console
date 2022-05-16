@@ -6,5 +6,6 @@ pub fn main() -> Result<()> {
     tc.write("Hey, ")?;
     tc.clearln()?;
     tc.write("Hello, ")?;
-    tc.writeln("World!")
+    tc.writeln("World!")?;
+    Ok(())
 }

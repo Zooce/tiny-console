@@ -25,38 +25,43 @@ impl TinyConsole {
         }
     }
 
-    pub fn write(&self, s: &str) -> Result<()> {
-        self.terminal.write_str(s)
+    pub fn write(&self, s: &str) -> Result<&Self> {
+        self.terminal.write_str(s)?;
+        Ok(&self)
     }
 
-    pub fn cwrite(&self, s: &str, c: Color) -> Result<()> {
+    pub fn cwrite(&self, s: &str, c: Color) -> Result<&Self> {
         self.swrite(s, &Style::new().fg(c))
     }
 
-    pub fn swrite(&self, s: &str, t: &Style) -> Result<()> {
+    pub fn swrite(&self, s: &str, t: &Style) -> Result<&Self> {
         let styled = format!("{}", t.apply_to(s));
         self.write(&styled)
     }
 
-    pub fn writeln(&self, s: &str) -> Result<()> {
-        self.terminal.write_line(s)
+    pub fn writeln(&self, s: &str) -> Result<&Self> {
+        self.terminal.write_line(s)?;
+        Ok(&self)
     }
 
-    pub fn cwriteln(&self, s: &str, c: Color) -> Result<()> {
+    pub fn cwriteln(&self, s: &str, c: Color) -> Result<&Self> {
         self.swriteln(s, &Style::new().fg(c))
     }
 
-    pub fn swriteln(&self, s: &str, t: &Style) -> Result<()> {
+    pub fn swriteln(&self, s: &str, t: &Style) -> Result<&Self> {
         let styled = format!("{}", t.apply_to(s));
         self.writeln(&styled)
     }
 
-    pub fn clearln(&self) -> Result<()> {
-        self.terminal.clear_line()
+    pub fn clearln(&self) -> Result<&Self> {
+        self.terminal.clear_line()?;
+        Ok(&self)
     }
 
-    pub fn flush(&self) -> Result<()> {
-        self.terminal.flush()
+    pub fn flush(&self) -> Result<&Self> {
+        self.terminal.flush()?;
+        Ok(&self)
+    }
 
     pub fn read(&self) -> Result<String> {
         self.terminal.read_line()

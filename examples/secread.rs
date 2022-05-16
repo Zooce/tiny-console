@@ -7,7 +7,7 @@ pub fn main() -> std::io::Result<()> {
 
     let secret = tc.secread()?;
 
-    tc.writeln(&format!("Nope, the secret code is not: {}", secret))?;
+    tc.write("Nope. The secret code is not: ")?.writeln(&secret)?;
 
     Ok(())
 }

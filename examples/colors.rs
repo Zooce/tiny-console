@@ -9,5 +9,6 @@ pub fn main() -> Result<()> {
     tc.write("Hello")?;
     tc.cwrite(", ", Color::Magenta)?;
     tc.cwrite("World", g)?;
-    tc.writeln("!")
+    tc.writeln("!")?;
+    Ok(())
 }
