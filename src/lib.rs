@@ -57,5 +57,12 @@ impl TinyConsole {
 
     pub fn flush(&self) -> Result<()> {
         self.terminal.flush()
+
+    pub fn read(&self) -> Result<String> {
+        self.terminal.read_line()
+    }
+
+    pub fn secread(&self) -> Result<String> {
+        self.terminal.read_secure_line()
     }
 }
