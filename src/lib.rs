@@ -2,29 +2,11 @@ use console::Term;
 pub use console::{Color, Style};
 use std::io::Result;
 
-pub enum Mode {
-    Stdout,
-    Stderr,
-    BufferedStdout,
-    BufferedStderr,
-}
-
 pub struct TinyConsole {
     terminal: Term,
 }
 
 impl TinyConsole {
-    pub fn new(mode: Mode) -> Self {
-        Self {
-            terminal: match mode {
-                Mode::Stdout => Term::stdout(),
-                Mode::Stderr => Term::stderr(),
-                Mode::BufferedStdout => Term::buffered_stdout(),
-                Mode::BufferedStderr => Term::buffered_stderr(),
-            }
-        }
-    }
-
     pub fn write(&self, s: &str) -> Result<&Self> {
         self.terminal.write_str(s)?;
         Ok(&self)
@@ -70,4 +52,20 @@ impl TinyConsole {
     pub fn secread(&self) -> Result<String> {
         self.terminal.read_secure_line()
     }
+}
+
+pub fn stdout() -> TinyConsole {
+    TinyConsole{ terminal: Term::stdout() }
+}
+
+pub fn buffered_stdout() -> TinyConsole {
+    TinyConsole{ terminal: Term::buffered_stdout() }
+}
+
+pub fn stderr() -> TinyConsole {
+    TinyConsole{ terminal: Term::stderr() }
+}
+
+pub fn buffered_stderr() -> TinyConsole {
+    TinyConsole{ terminal: Term::buffered_stderr() }
 }
