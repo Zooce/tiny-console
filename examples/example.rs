@@ -2,13 +2,19 @@ use std::io;
 
 pub fn main() -> io::Result<()> {
     using_console()?;
-    using_tiny_console()
+    using_tiny_console()?;
+
+    Ok(())
 }
 
 fn using_console() -> io::Result<()> {
     use console::{Term, style, Style, Color};
 
     let term = Term::buffered_stdout();
+
+    term.write_str(">>> Using ")?;
+    term.write_str(&format!("{}", style("console").fg(Color::Yellow)))?;
+    term.write_line(" <<<")?;
 
     let white_on_green = Style::new().fg(Color::White).on_green();
 
@@ -45,6 +51,10 @@ fn using_tiny_console() -> io::Result<()> {
     use tiny_console::{self as tc, Color, Style};
 
     let term = tc::buffered_stdout();
+
+    term.write(">>> Using ")?
+        .cwrite("tiny-console", Color::Yellow)?
+        .write(" <<<")?;
 
     let white_on_green = Style::new().fg(Color::White).on_green();
 
