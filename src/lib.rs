@@ -70,3 +70,13 @@ pub fn stderr() -> TinyConsole {
 pub fn buffered_stderr() -> TinyConsole {
     TinyConsole{ terminal: Term::buffered_stderr() }
 }
+
+
+// TODO: pad + truncate/fit
+// TODO: how to fit a "chained" string like `term.write("this")?.cwrite(" is ", Color::Cyan)?.writeln("cool!")?;`
+
+// CHANGE OF PLANS
+// - buffered only?
+// term.text("Hello").styled(", ", &style).blue("World").write()
+
+pub mod maybe;

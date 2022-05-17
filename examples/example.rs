@@ -3,6 +3,7 @@ use std::io;
 pub fn main() -> io::Result<()> {
     using_console()?;
     using_tiny_console()?;
+    using_maybe_console()?;
 
     Ok(())
 }
@@ -54,7 +55,8 @@ fn using_tiny_console() -> io::Result<()> {
 
     term.write(">>> Using ")?
         .cwrite("tiny-console", Color::Yellow)?
-        .write(" <<<")?;
+        .writeln(" <<<")?
+        .flush()?;
 
     let white_on_green = Style::new().fg(Color::White).on_green();
 
@@ -81,6 +83,39 @@ fn using_tiny_console() -> io::Result<()> {
     term.write("Nope. The secret code is not: ")?.writeln(&secret)?.flush()?;
 
     tc::stderr().writeln(&format!("Invalid secret code: {}", &secret))?;
+
+    Ok(())
+}
+
+
+fn using_maybe_console() -> io::Result<()> {
+    use tiny_console::{maybe, Color, Style};
+
+    let mut term = maybe::stdout();
+
+    term.text(">>> Using ").yellow("maybe-console").text(" <<<")
+        .writeln()?;
+
+    let white_on_green = Style::new().fg(Color::White).on_green();
+
+    term.text("Hello, ").styled("friend", &white_on_green).text("!")
+        .writeln()?;
+
+    term.text("What's your ").cyan("name").text("? ")
+        .write()?;
+
+    let name = term.read()?;
+
+    term.text("Nice to meet you, ").styled(&name, &white_on_green)
+        .writeln()?;
+
+    term.text("What's the secret code? ").write()?;
+
+    let secret = term.secread()?;
+
+    term.text("Nope. The secret code is not: ").text(&secret).writeln()?;
+
+    maybe::stderr().text(&format!("Invalid secret code: {}", &secret)).writeln()?;
 
     Ok(())
 }
