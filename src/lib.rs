@@ -7,31 +7,31 @@ pub struct TinyConsole {
 }
 
 impl TinyConsole {
-    pub fn write(&self, s: &str) -> Result<&Self> {
-        self.terminal.write_str(s)?;
+    pub fn write(&self, text: &str) -> Result<&Self> {
+        self.terminal.write_str(text)?;
         Ok(&self)
     }
 
-    pub fn cwrite(&self, s: &str, c: Color) -> Result<&Self> {
-        self.swrite(s, &Style::new().fg(c))
+    pub fn cwrite(&self, text: &str, color: Color) -> Result<&Self> {
+        self.swrite(text, &Style::new().fg(color))
     }
 
-    pub fn swrite(&self, s: &str, t: &Style) -> Result<&Self> {
-        let styled = format!("{}", t.apply_to(s));
+    pub fn swrite(&self, text: &str, style: &Style) -> Result<&Self> {
+        let styled = format!("{}", style.apply_to(text));
         self.write(&styled)
     }
 
-    pub fn writeln(&self, s: &str) -> Result<&Self> {
-        self.terminal.write_line(s)?;
+    pub fn writeln(&self, text: &str) -> Result<&Self> {
+        self.terminal.write_line(text)?;
         Ok(&self)
     }
 
-    pub fn cwriteln(&self, s: &str, c: Color) -> Result<&Self> {
-        self.swriteln(s, &Style::new().fg(c))
+    pub fn cwriteln(&self, text: &str, color: Color) -> Result<&Self> {
+        self.swriteln(text, &Style::new().fg(color))
     }
 
-    pub fn swriteln(&self, s: &str, t: &Style) -> Result<&Self> {
-        let styled = format!("{}", t.apply_to(s));
+    pub fn swriteln(&self, text: &str, style: &Style) -> Result<&Self> {
+        let styled = format!("{}", style.apply_to(text));
         self.writeln(&styled)
     }
 
